@@ -64,10 +64,10 @@ func durationParser(dInt int) (string, error) {
 	var seconds, mins, hours int
 	seconds = dInt % 100
 	if dInt > 99 {
-		mins = dInt%10000 - seconds
+		mins = (dInt%10000 - seconds) / 100
 	}
 	if dInt > 9999 {
-		hours = dInt%1000000 - mins
+		hours = (dInt%1000000 - mins) / 10000
 	}
 	if seconds > 5900 || mins > 5900 || hours > 230000 {
 		return "", errors.New("Invalid format")
