@@ -10,8 +10,10 @@ import (
 	"time"
 )
 
+const path = "./assets/alarms/sample1.wav"
+
 func main() {
-	audio := exec.Command("ffplay", "-nodisp", "-autoexit", "./assets/alarms/sample1.wav")
+	audio := exec.Command("ffplay", "-nodisp", "-autoexit", path)
 	args := os.Args
 	scanner := bufio.NewScanner(os.Stdin)
 	dStringArg, err := argsParser(args)
