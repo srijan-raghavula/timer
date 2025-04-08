@@ -10,7 +10,8 @@ import (
 	"time"
 )
 
-const path = "~/repos/timer/assets/alarms/sample1.wav"
+// add your path
+const path = "./assets/alarms/sample1.wav"
 
 func main() {
 	audio := exec.Command("ffplay", "-nodisp", "-autoexit", path)
@@ -34,12 +35,11 @@ func main() {
 			os.Stdout.Sync()
 			time.Sleep(1 * time.Second)
 		}
-		go func() {
-			err = audio.Run()
-			if err != nil {
-				fmt.Println("\nError playing file: ", err)
-			}
-		}()
+		fmt.Printf("\n")
+		err = audio.Run()
+		if err != nil {
+			fmt.Println("\nError playing file: ", err)
+		}
 		fmt.Printf("time > ")
 		if !scanner.Scan() {
 			fmt.Println("\nError scanning from stdin")
@@ -72,7 +72,8 @@ func durationParser(dInt int) (string, error) {
 	if seconds > 5900 || mins > 5900 || hours > 230000 {
 		return "", errors.New("Invalid format")
 	}
-	dStringArg := fmt.Sprintf("%vh%vm", hours, mins)
+	dStringArg := fmt.Sprintf("%vh%vm%vs", hours, mins, seconds)
+	fmt.Println(dStringArg)
 	return dStringArg, nil
 }
 
