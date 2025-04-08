@@ -10,7 +10,7 @@ import (
 	"time"
 )
 
-const path = "./assets/alarms/sample1.wav"
+const path = "~/repos/timer/assets/alarms/sample1.wav"
 
 func main() {
 	audio := exec.Command("ffplay", "-nodisp", "-autoexit", path)
