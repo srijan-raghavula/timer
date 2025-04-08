@@ -14,7 +14,6 @@ import (
 const path = "/home/shreezn/repos/timer/assets/alarms/sample1.wav"
 
 func main() {
-	audio := exec.Command("ffplay", "-nodisp", "-autoexit", path)
 	args := os.Args
 	scanner := bufio.NewScanner(os.Stdin)
 	dStringArg, err := argsParser(args)
@@ -23,6 +22,7 @@ func main() {
 		return
 	}
 	for {
+		audio := exec.Command("ffplay", "-nodisp", "-autoexit", path)
 		d, err := time.ParseDuration(dStringArg)
 		if err != nil {
 			fmt.Println("\nerror parsing duration arg: ", err)
