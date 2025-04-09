@@ -7,6 +7,7 @@ import (
 	"os"
 	"os/exec"
 	"strconv"
+	"strings"
 	"time"
 )
 
@@ -45,7 +46,7 @@ func main() {
 			fmt.Println("\nError scanning from stdin")
 			return
 		}
-		dStringArg, err = durationParser(strToInt(scanner.Text()))
+		dStringArg, err = durationParser(strToInt(strings.TrimSpace(scanner.Text())))
 		if err != nil {
 			fmt.Println("\nerror making duration arg: ", err)
 			return
