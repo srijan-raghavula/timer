@@ -87,6 +87,10 @@ func durationParser(dInt int) (string, error) {
 }
 
 func strToInt(s string) int {
+	switch s {
+	case ":q", "exit", "q", "out", "o":
+		os.Exit(1)
+	}
 	dInt, err := strconv.Atoi(s)
 	if err != nil {
 		fmt.Println("Error converting to string: ", err)
