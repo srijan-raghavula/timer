@@ -22,6 +22,7 @@ func main() {
 		fmt.Println("ERROR: ", err)
 		return
 	}
+
 	for {
 		audio := exec.Command("ffplay", "-nodisp", "-autoexit", path)
 		d, err := time.ParseDuration(dStringArg)
@@ -29,6 +30,7 @@ func main() {
 			fmt.Println("\nerror parsing duration arg: ", err)
 			return
 		}
+
 		spinners := []string{"|", "/", "-", "\\"}
 		for i := int(d.Seconds()); i > 0; i-- {
 			spin := spinners[i%len(spinners)]
@@ -37,15 +39,21 @@ func main() {
 			time.Sleep(1 * time.Second)
 		}
 		fmt.Printf("\n")
-		err = audio.Run()
-		if err != nil {
-			fmt.Println("\nError playing file: ", err)
-		}
+
+		go func() {
+			err = audio.Start()
+			if err != nil {
+				fmt.Println("\nError playing file: ", err)
+			}
+		}()
+
 		fmt.Printf("time > ")
 		if !scanner.Scan() {
 			fmt.Println("\nError scanning from stdin")
 			return
 		}
+		audio.Process.Kill()
+
 		dStringArg, err = durationParser(strToInt(strings.TrimSpace(scanner.Text())))
 		if err != nil {
 			fmt.Println("\nerror making duration arg: ", err)
@@ -81,7 +89,7 @@ func durationParser(dInt int) (string, error) {
 func strToInt(s string) int {
 	dInt, err := strconv.Atoi(s)
 	if err != nil {
-		fmt.Println("Error convertin to string: ", err)
+		fmt.Println("Error converting to string: ", err)
 		return 0
 	}
 	return dInt
